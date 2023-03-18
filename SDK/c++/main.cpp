@@ -59,6 +59,7 @@ struct robot{
 
     vector<pair<int,int>> commands; 
 };
+robot robots[4];
 const int robot_cnt=4;
 bool readframe()
 {
