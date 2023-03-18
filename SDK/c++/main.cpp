@@ -35,30 +35,31 @@ bool readUntilOK() {
 int frameID;
 int money;
 int bench_cnt;
-class bench{
+struct bench{
     int type;
     double x,y;
     int last;
     int instatus;
     int outstatus;
-}
+};
 bench benchs[55];
 
-string instr[5]={
+string command[5]={
     "forward",
     "rotate",
     "buy",
     "sell",
     "destroy"
 };
-class robot{
+struct robot{
     int benchid;
     int carry;
     double time_factor;
     double bump_factor;
 
-    vector<int> 
-}
+    vector<pair<int,int>> commands; 
+};
+const int robot_cnt=4;
 bool readframe()
 {
     scanf("%d",&frameID);
@@ -73,7 +74,6 @@ bool readframe()
         scanf("%d",&benchs[i].instatus);
         scanf("%d",&benchs[i].outstatus);
     }
-    scanf("%d",&robot_cnt);
     for(int i=0;i<robot_cnt;i++)
     {
         scanf("%d",&robots[i].benchid);
@@ -81,6 +81,7 @@ bool readframe()
         scanf("%lf",&robots[i].time_factor);
         scanf("%lf",&robots[i].bump_factor);
     }
+
     return true;
 }
 
