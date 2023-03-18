@@ -60,7 +60,10 @@ struct robot{
     double line_speed;
     double direction;
     double x,y;
-
+    struct task{
+        int target;
+        int time_last;//剩余时间（未实装）
+    };
     vector<pair<int,int>> commands; 
 };
 robot robots[4];    
@@ -118,6 +121,48 @@ bool move_to_bench(int robotid,int benchid)
         robots[robotid].commands.push_back(make_pair(0,3));
     }
     return true;
+}
+
+guzhi[bench]//估值
+guzhi2[type]//辅助估值 0~1
+int solve(){
+    
+    int rp5=0,rp6=0,rp4=0,rp1=0,rp2=0,rp3=0;
+    for(int i=0;i<=50;i++){
+        if(benchs[i].out)guzhi[i]+++//劲增，猛增,霸霸霸霸霸
+        if(benchs[i].type==7){
+            if(((benchs[i].instatus>>3)&1)==0)guzhi2[4]++;//缺货
+            if(((benchs[i].instatus>>4)&1)==0)guzhi2[5]++;
+            if(((benchs[i].instatus>>5)&1)==0)guzhi2[6]++;
+        }
+        if(benchs[i].type==4){
+            if(((benchs[i].instatus)&1)==0)guzhi2[1]++;
+            if(((benchs[i].instatus>>1)&1)==0)guzhi2[2]++;
+        }
+        if(benchs[i].type==5){
+            if(((benchs[i].instatus)&1)==0)guzhi2[1]++;
+            if(((benchs[i].instatus>>2)&1)==0)guzhi2[3]++;
+        }
+        if(benchs[i].type==6){
+            if(((benchs[i].instatus>>1)&1)==0)guzhi2[1]++;
+            if(((benchs[i].instatus>>2)&1)==0)guzhi2[3]++;
+        }
+    }
+    int mx=0;
+    for(int i=1;i<=7;i++){
+        guzhi2[i]/=benchi_count;
+    }
+    mx=max(mx,guzhi2[i]);
+    for(int i=1;i<=7;i++)guzhi2[i]/=mx//限制在0~1间
+    guzhi2[1]=guzhi2[1]/3+guzhi2[4]/3+guzhi2[5]/3;
+    guzhi2[2]=guzhi2[2]/3+guzhi2[4]/3+guzhi2[6]/3;
+    guzhi2[3]=guzhi2[3]/3+guzhi2[5]/3+guzhi2[6]/3;
+    for(int i=0;i<50;i++)guzhi[i]=guzhi[i]+guzhi2[bench[i].type]*C;
+
+    int id=0;
+    for(int i in allpossible task ){
+        if(function(i)>function(id)||id==0)id=i;
+    }
 }
 
 int main() {
