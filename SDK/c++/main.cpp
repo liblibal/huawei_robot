@@ -4,7 +4,7 @@ using namespace std;
 
 
 const int maxn=1024;
-
+const double pi=acos(-1);
 
 
 
@@ -56,10 +56,14 @@ struct robot{
     int carry;
     double time_factor;
     double bump_factor;
+    double rotate_speed;
+    double line_speed;
+    double direction;
+    double x,y;
 
     vector<pair<int,int>> commands; 
 };
-robot robots[4];
+robot robots[4];    
 const int robot_cnt=4;
 bool readframe()
 {
@@ -81,6 +85,11 @@ bool readframe()
         scanf("%d",&robots[i].carry);
         scanf("%lf",&robots[i].time_factor);
         scanf("%lf",&robots[i].bump_factor);
+        scanf("%lf",&robots[i].rotate_speed);
+        scanf("%lf",&robots[i].line_speed);
+        scanf("%lf",&robots[i].direction);
+        scanf("%lf",&robots[i].x);
+        scanf("%lf",&robots[i].y);
     }
 
     return true;
@@ -88,7 +97,27 @@ bool readframe()
 
 bool move_to_bench(int robotid,int benchid)
 {
-
+    double x=benchs[benchid].x;
+    double y=benchs[benchid].y;
+    double dx=x-robots[robotid].x;
+    double dy=y-robots[robotid].y;
+    double angle=atan2(dy,dx);
+    double delta=angle-robots[robotid].direction;
+    if(delta>3.1415926)delta-=2*3.1415926;
+    if(delta<-3.1415926)delta+=2*3.1415926;
+    if(delta>0.1)
+    {
+        robots[robotid].commands.push_back(make_pair(1,delta*180/3.1415926));
+    }
+    else if(delta<-0.1)
+    {
+        robots[robotid].commands.push_back(make_pair(1,delta*180/3.1415926));
+    }
+    else
+    {
+        robots[robotid].commands.push_back(make_pair(0,3));
+    }
+    return true;
 }
 
 int main() {
