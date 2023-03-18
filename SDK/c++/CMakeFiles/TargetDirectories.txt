@@ -1,0 +1,3 @@
+D:/dmh/Abracadabra/WindowsRelease/WindowsRelease/SDK/c++/CMakeFiles/main.dir
+D:/dmh/Abracadabra/WindowsRelease/WindowsRelease/SDK/c++/CMakeFiles/ALL_BUILD.dir
+D:/dmh/Abracadabra/WindowsRelease/WindowsRelease/SDK/c++/CMakeFiles/ZERO_CHECK.dir
